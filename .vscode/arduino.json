@@ -1,0 +1,6 @@
+{
+    "sketch": "DC_Motor/DC_Motor/DC_Motor.ino",
+    "configuration": "cpu=atmega2560",
+    "board": "arduino:avr:mega",
+    "port": "/dev/tty.Bluetooth-Incoming-Port"
+}
