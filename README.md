@@ -1,24 +1,24 @@
 # ArduinoScopio
 Telescope mount with Arduino
 
-Questo è il mio progetto per guidare la montatura EQ2 del mio telescopio in maniera più precisa, evitando le vibrazioni che si creano toccando il telescopio e agevolando l'utilizzo per astrofotografia amatoriale. 
+This is my project to guide the EQ2 mount of my telescope more precisely, avoiding the vibrations created by touching the telescope and facilitating the use for amateur astrophotography. 
 
-## Telescopio
-Il telescopio in questione è uno SkyWatcher 130/900 f6.9, con montatura equatoriale EQ2 non motorizzata. È un telescopio entry level, principalmente usato per l'osservazione planetaria, ma con il giusto compromesso si può usare anche per astrofotografia. 
-Questo è un telescopio riflettore. Esistono principalmente 3 tipi di telescopio:
-1. rifrattore
-2. riflettore
-3. catadiottrico
+## Telescope
+The telescope i'm using is a SkyWatcher 130/900 f6.9, with a non-motorized EQ2 equatorial mount. It is an entry level telescope, mainly used for planetary observation, but with the right compromise it can also be used for astrophotography.
+This is a reflecting telescope. There are mainly 3 types of telescopes:
+1. Refracting Telescope
+2. Reflecting Telescope
+3. Catadioptric Telescope
 
-Il [telescopio rifrattore](https://en.wikipedia.org/wiki/Refracting_telescope) è il telescopio con le lenti, che piega la luce dirigendola nell'oculare. Ha una rotella per mettere a fuoco l'immagine, che fondamentalmente allontana o avvicina l'oculare alla lente, cambiando il punto di incontro con la luce. Questi telescopi sono caratterizzati da un basso zoom, ideali per astrofotografia di oggetti dello spazio profondo. Generalmente sono molto costosi
+The [refracting telescope](https://en.wikipedia.org/wiki/Refracting_telescope) is a telescope with lenses that bends light, directing it into the eyepiece. It has a wheel to focus the image, which basically moves the eyepiece towards or away from the lens, changing where it meets the light. These telescopes are characterized by a low zoom, ideal for astrophotography of deep space objects. They are usually very expensive
 
-Il [telescopio riflettore](https://en.wikipedia.org/wiki/Reflecting_telescope) è un telescopio molto semplice. È un tubo di lunghezza variabile con uno specchio parabolico sul fondo, che concentra la luce su uno specchio secondario posto all'apertura del tubo. Questo specchio secondario riflette la luce nell'oculare, anche qui dotato di una rotella per la messa a fuoco con lo stesso funzionamento di quella del telescopio riflettore, allontana e avvicina l'oculare dallo specchio secondario. Questi telescopi sono molto più economici e con uno zoom molto elevato, ideali per l'osservazione di oggetti del sistema solare, un po' meno di quelli di spazio profondo.
+The [reflector telescope](https://en.wikipedia.org/wiki/Reflecting_telescope) is a very simple telescope. It is a tube of variable length with a parabolic mirror at the bottom, which concentrates the light on a secondary mirror placed at the opening of the tube. This secondary mirror reflects the light into the eyepiece, equipped with a focusing wheel with the same function as that of the refracting telescope, it moves the eyepiece away and towards the secondary mirror. These telescopes are much cheaper and with a very high zoom, ideal for observing objects in the solar system, a little less than those in deep space.
 
-Il [telescopio catadiottrico](https://en.wikipedia.org/wiki/Catadioptric_system) è un insieme dei due telescopi precedenti, con una lente all'inizio ed uno specchio sul fondo, uno specchio secondario al centro della lente che concentra la luce sull'oculare. Questi telescopi hanno una qualità molto elevata, a discapito di un prezzo anch'esso molto elevato.
+The [catadioptric telescope](https://en.wikipedia.org/wiki/Catadioptric_system) is a combination of the two previous telescopes, with a lens at the front and a mirror at the bottom, a secondary mirror in the center of the lens which concentrates the light on the eyepiece. These telescopes have a very high quality, at the expense of a very high price.
 
-La [montatura equatoriale](https://en.wikipedia.org/wiki/Equatorial_mount) è una montatura particolare. A differenza delle montature altazimutali (quelle delle macchine fotografiche, per intenderci) non si muove sull'asse x, y, z, ma sull'asse di ascensione retta e declinazione. L'asse di rotazione della terra, infatti, punta grossomodo alla stella polare, cambiando posizione di pochi gradi. Puntando, quindi, la montatura alla stella polare possiamo ruotare solo un'asse del telescopio, l'asse di ascensione retta, per tenere la stella sempre al centro dell'oculare. La velocità di tracciamento delle stelle, però, è estremamente bassa. Una stella nel cielo, si muove di 361° ogni 24 ore, quindi circa 15arcsecondi al secondo (dove un arcsecondo è 1/3600 di grado), per questo seve un motore che sia abbastanza potente da far muovere tutto il telescopio e lento per tracciare le stelle.
+The [equatorial mount](https://en.wikipedia.org/wiki/Equatorial_mount) is a particular mount. Unlike the altazimuth mounts (those of cameras, to be clear) it does not move on the x, y, z axis, but on the axis of right ascension and declination. The axis of rotation of the earth, in fact, points roughly to the pole star, changing position by a few degrees. Therefore, by aiming the mount at the North Star, we can rotate only one axis of the telescope, the right ascension axis, to keep the star always in the center of the eyepiece. However, the tracking speed of the stars is extremely slow. A star in the sky moves 361° every 24 hours, so about 15arcseconds per second (where an arcsecond is 1/3600th of a degree), so you need a motor that is powerful enough to move the entire telescope and slow to track the stars.
 
-## Materiali
+## Materials
 1. [RA-Motor](https://www.astroshop.it/kit-motori-e-sistemi-goto/skywatcher-motore-ra-per-eq-1/p,1531?utm_medium=cpc&utm_term=1531&utm_campaign=2307&utm_source=froogle-it&gclid=CjwKCAjw2K6lBhBXEiwA5RjtCU1okDMWhpc3hHXgdOJ9-9ABBHrxcbmZdpyxXS5IeCFoqms-IWOFAhoCS7wQAvD_BwE&utm_content=)
 2. [Arduino Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3)
 3. [H Bridge L293D](https://www.progettiarduino.com/15-arduino-motore-ponte-h-l293d-sn754410.html)
@@ -31,16 +31,16 @@ La [montatura equatoriale](https://en.wikipedia.org/wiki/Equatorial_mount) è un
 ## Circuit
 
 
-## Funzionamento
-Il funzionamento del progetto è molto semplice, premendo i tasti sul tastuerino numerico il motore si muove in modo diverso:
-- (1) Imposta velocità al minimo
-- (3) Imposta velocità a metà
-- (9) Imposta velocità al massimo 
-- (A) Aumenta la velocità di 0.5 
-- (B) Diminuisce la velocità di 0.5 
-- (C) Aumenta la velocità di 1 
-- (D) Diminuisce la velocità di 1 
-- (*) Aumenta la velocità di 10 
-- (#) Diminuisce la velocità di 10
+## Functioning
+The operation of the project is very simple, by pressing the keys on the numeric keypad the motor moves in a different way. Thanks to the H-Bridge it might also move backwards, it might be a future implementation.
+- (1) Minimum speed
+- (3) Half speed
+- (9) Maximum speed
+- (A) Increases speed by 0.5 
+- (B) Decreases speed by 0.5 
+- (C) Increases speed by 1 
+- (D) Decreases speed by 1 
+- (*) Increases speed by 10 
+- (#) Decreases speed by 10
 
-Il codice principale si trova nella directory src/main/main.ino. Le librerie necessarie sono quelle del display lcd (LiquidCrystal.h) e del keypad (Keypad.h).
+The main code is located in the src/main/main.ino directory. The necessary libraries are those of the lcd display (LiquidCrystal.h) and of the keypad (Keypad.h).
