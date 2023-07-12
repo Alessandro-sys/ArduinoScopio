@@ -29,7 +29,9 @@ The [equatorial mount](https://en.wikipedia.org/wiki/Equatorial_mount) is a part
 8. [Numpad 4x4](https://www.amazon.it/ANGEEK-Membrane-Switch-Keyboard-arduino/dp/B07X5VL58V/ref=sr_1_1_sspa?__mk_it_IT=ÅMÅŽÕÑ&crid=1MFVXQJOIKMSZ&keywords=keypad+4x4+arduino&qid=1689015098&sprefix=keypad+4x4+arduino%2Caps%2C93&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1)
 
 ## Circuit
-
+![lcd](https://github.com/Alessandro-sys/ArduinoScopio/assets/71657415/c5ddfb40-449c-487e-b541-2b8605a9b0c0)
+![Motore](https://github.com/Alessandro-sys/ArduinoScopio/assets/71657415/6346d255-c4ec-4b30-96f6-dd50993c1e9e)
+There's no numpad on Tinkercad, so no scheme. But the numpad pins are connected left to right to the pins from 22 to 29.
 
 ## Functioning
 The operation of the project is very simple, by pressing the keys on the numeric keypad the motor moves in a different way. Thanks to the H-Bridge it might also move backwards, it might be a future implementation.
