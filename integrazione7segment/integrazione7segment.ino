@@ -1,33 +1,36 @@
-/*  Esempio creato partendo dal codice: "Arduino UNO running 4-digit 7-segment display". 
-    http://www.hobbytronics.co.uk/arduino-4digit-7segment
-    di pubblico dominio (meglio  beerware: offri una birra all'autore
-
-    Questo è un esempio per pilotare un display 7 segmenti con 4 elementi
-    senza usare resistenze. Questa tecnica è molto diffusa ma devi sapere
-    che eventuali errori possono portare ad un sovraccarico di corrente
-    con il rischio di bruciare qualche segmento del display (basta porre attenzione
-    al valore di luminosità). 
- 
-*/
-#define DIGIT_ON  LOW // E' un modello a Anodo Comune
+#define DIGIT_ON  LOW 
 #define DIGIT_OFF  HIGH
-// -----------------------------------------------------------------
-// PIN della fila in basso del display ==> e,d,dp,c,g,4
-// -----------------------------------------------------------------
-// La parte bassa corrisponde a quella dove ho il punto decimale
-// La numerazione del modulo "Display a 7 segmenti" con 4 elementi 
-// va da sinistra a destra
+
+
+// Setup ponte H
+int enA = 49;
+int in1 = 51;
+int in2 = 53;
+
+
+
+
+// Setup Bottoni
+#define buttonAdd 22
+#define buttonSub 23
+#define buttonChange 25
+
+// Setup variabili potenza motori
+const float maxPower = 255.0;
+float motorPower = 255.0;
+float percentage = 100.0;
+float changeRate = 0.5;
+
+
+// Setup 7segment
 int segE = 13;  // Primo PIN
 int segD = 12;  // Secondo PIN 
 int segDP = 11; // Terzo PIN
 int segC = 10;  // Quarto PIN
 int segG = 9;   // Quinto PIN
 int digit4 = 8; // Sesto PIN - PWM che Accende il quarto digit
-// -----------------------------------------------------------------
-// PIN della fila in alto del display ==> 1,a,f,2,3,b 
-// -----------------------------------------------------------------
-// La numerazione del modulo "Display a 7 segmenti" con 4 elementi 
-// va da sinistra a destra
+
+
 int digit1 = 7; // Dodicesimo PIN - PWM che Accende il primo digit
 int segA =  6;  // Undicesimo PIN
 int segF = 5;   // Decimo PIN
@@ -35,36 +38,120 @@ int digit2 = 4; // Nono PIN - PWM che Accende il secondo digit
 int digit3 = 3; // Ottavo PIN - PWM che Accende il terzo digit 
 int segB = 2;   // Settimo PIN
 
-void setup() 
-{
+int oldButton = 0;
+
+void setup() {
+  pinMode(buttonAdd, INPUT);
+  pinMode(buttonSub, INPUT);
+  pinMode(buttonChange, INPUT);
+  pinMode(segA, OUTPUT);
+  pinMode(segB, OUTPUT);
+  pinMode(segC, OUTPUT);
+  pinMode(segD, OUTPUT);
+  pinMode(segE, OUTPUT);
+  pinMode(segF, OUTPUT);
+  pinMode(segG, OUTPUT);
+  pinMode(segDP, OUTPUT);
+  // Pin relativi all'elemento
+  pinMode(digit1, OUTPUT);
+  pinMode(digit2, OUTPUT);
+  pinMode(digit3, OUTPUT);
+  pinMode(digit4, OUTPUT);
+  // Spengo tutti gli elementi
+  digitalWrite(digit1, DIGIT_OFF);
+  digitalWrite(digit2, DIGIT_OFF);
+  digitalWrite(digit3, DIGIT_OFF);
+  digitalWrite(digit4, DIGIT_OFF);
+
+  // Setup pin ponte H
+  pinMode(enA, OUTPUT);
+  pinMode(in1, OUTPUT);
+  pinMode(in2, OUTPUT);
+
   Serial.begin(9600);
-    // Imposto titti i pin come output  
-    pinMode(segA, OUTPUT);
-    pinMode(segB, OUTPUT);
-    pinMode(segC, OUTPUT);
-    pinMode(segD, OUTPUT);
-    pinMode(segE, OUTPUT);
-    pinMode(segF, OUTPUT);
-    pinMode(segG, OUTPUT);
-    pinMode(segDP, OUTPUT);
-    // Pin relativi all'elemento
-    pinMode(digit1, OUTPUT);
-    pinMode(digit2, OUTPUT);
-    pinMode(digit3, OUTPUT);
-    pinMode(digit4, OUTPUT);
-    // Spengo tutti gli elementi
-    digitalWrite(digit1, DIGIT_OFF);
-    digitalWrite(digit2, DIGIT_OFF);
-    digitalWrite(digit3, DIGIT_OFF);
-    digitalWrite(digit4, DIGIT_OFF);
 }
 
-void loop() 
-{
-    Serial.print("Numero passato: ");
-    Serial.println(millis() / 1000);
-    displayNumber(millis()/1000);
+void loop() {
+  analogWrite(enA, motorPower);
+  int pressedButton = getKey();
+
+  
+
+  if (pressedButton != 0)
+  {
+    if (pressedButton == oldButton)
+    {
+      oldButton = pressedButton;
+      pressedButton = 0;
+    }
+    else
+    {
+      oldButton = pressedButton;
+    }
+  }
+  else
+  {
+    oldButton = 0;
+  }
+  
+  Serial.println(pressedButton);
+
+ 
+  pressedKey(pressedButton, motorPower, percentage);
+
+  if (pressedButton == 3)
+  {
+    for (int i = 0; i < 80; i++)
+    {
+      if (changeRate != 0.5)
+      {
+        displayNumber(changeRate * 10);
+      }
+      else
+      {
+        displayNumber(5);
+      }
+    }
+  }
+
+  displayNumber(percentage * 10);
 }
+
+
+
+
+
+
+
+int getKey(){
+  if (digitalRead(buttonAdd) == HIGH)
+  {
+    //Serial.println("bottone premuto 1");
+    return 1;
+  }
+  else if (digitalRead(buttonSub) == HIGH)
+  {
+    //Serial.println("bottone premuto 2");
+    return 2;
+  }
+  else if (digitalRead(buttonChange) == HIGH)
+  {
+    //Serial.println("bottone premuto 3");
+    return 3;
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+
+
+
+
+
+
+
 
 void displayNumber(int toDisplay)
 {
@@ -83,9 +170,12 @@ void displayNumber(int toDisplay)
       else if (digit==1)
           digitalWrite(digit1, DIGIT_ON);
 
+
+      if (digit == 3)
+        digitalWrite(segDP, HIGH);
       // Mostra il resto della divisione per 10 sull'elemento posto ad ON
       MostraSingoloNumero(toDisplay % 10);
-      Serial.println(toDisplay % 10);
+      
       // Lascia l'elemento ON per una breve frazione di secondo
       delayMicroseconds(DISPLAY_BRIGHTNESS); 
       // Spegne tutti i segmenti del display selezionato
@@ -101,8 +191,7 @@ void displayNumber(int toDisplay)
   }
 }
 
-// Accende i segmenti specifici per ottenere la corretta 
-// visualizzazione del numero passato come parametro
+
 void MostraSingoloNumero(int n) 
 {
   #define SEGMENT_ON  HIGH
@@ -219,6 +308,42 @@ void MostraSingoloNumero(int n)
         digitalWrite(segE, SEGMENT_OFF);
         digitalWrite(segF, SEGMENT_OFF);
         digitalWrite(segG, SEGMENT_OFF);
+        digitalWrite(segDP, SEGMENT_OFF);
         break;
     }
+}
+
+void pressedKey(int key, float & motorPower, float & percentage){
+  if (key == 2)
+  {
+    if (motorPower > 0.5)
+    {
+      motorPower = motorPower - changeRate;
+      percentage = motorPower / 2.55;
+    }
+  }
+  else if (key == 1)
+  {
+    if (motorPower < 255.0)
+    {
+      motorPower = motorPower + changeRate;
+      percentage = motorPower / 2.55;
+    }
+  }
+  else if (key == 3)
+  {
+    if (changeRate == 0.5)
+    {
+      changeRate = 1.0;
+      
+    }
+    else if (changeRate == 1.0)
+    {
+      changeRate = 5.0;
+    }
+    else if (changeRate == 5.0)
+    {
+      changeRate = 0.5;
+    }
+  }
 }
